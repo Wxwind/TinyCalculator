@@ -13,7 +13,7 @@ export class Lexer {
   }
 
   skipWhitespace = () => {
-    while (this.nextChar === " " || this.nextChar === "\t" || this.nextChar === "\n") {
+    while (this.nextChar === " " || this.nextChar === "\t" || this.nextChar === "\n" || this.nextChar === "\r") {
       this.moveNext();
     }
   };

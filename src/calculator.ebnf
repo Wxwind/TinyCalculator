@@ -1,0 +1,12 @@
+(* expr = expr, addop, term | term; *)
+(* term = term, multiop, factor | factor; *)
+expr = term, {addop, term}
+term =  actor, {multiop, factor}
+factor = "(", expr, ")" | literial;
+literial = number,[unit];
+addop='+'|'-';
+multiop='*'|'/';
+unit = 'm'|'mm'|'cm';
+
+number = digit, {digit}, {'.', digit, {digit}};
+digit  = '0'-'9';
