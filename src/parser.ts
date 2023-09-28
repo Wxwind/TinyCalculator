@@ -1,4 +1,3 @@
-import { error } from "console";
 import { Lexer } from "./lexer";
 import { Token, TokenType } from "./token";
 import { ASTNode, NumberNode, OpNode, UnitNode } from "./ast";

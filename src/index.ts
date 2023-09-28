@@ -37,7 +37,7 @@ function main() {
   // console.timeEnd("compiler");
 
   console.time("compiler");
-  const exp = "3 * (0.1m + 2mm)";
+  const exp = "3 * (0.1ft + 2mm)";
   const res = calc(exp);
   console.log("the result of '%s' is: %s", exp, res);
   console.timeEnd("compiler");
