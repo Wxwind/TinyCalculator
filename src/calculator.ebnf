@@ -5,10 +5,10 @@ term = factor, {multiop, factor}
 factor = "(", expr, ")" | literial;
 literial = number,[unit];
 
-addop='+'|'-';
-multiop='*'|'/';
-unit = 'm'|'mm'|'cm';
+addop="+"|"-";
+multiop="*"|"/";
+unit = "m"|"mm"|"cm"|"inch"|"in"|"foot"|"feet"| "ft";
 
 
-number = digit, {digit}, {'.', digit, {digit}};
-digit  = '0'-'9';
+number = digit, {digit}, {".", digit, {digit}};
+digit  = "0"-"9";

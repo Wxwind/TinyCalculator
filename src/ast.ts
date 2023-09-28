@@ -1,11 +1,12 @@
-import { Token, TokenType } from "./token";
+import { Token } from "./token";
+import { isNil } from "./utils";
 
 export class ASTNode {
   protected children: ASTNode[] = [];
 
-  toString = (prefix: string = "") => {
-    return "ASTNode";
-  };
+  toString = (prefix: string = "") => prefix;
+
+  eval = () => 0;
 }
 
 export class OpNode extends ASTNode {
@@ -14,6 +15,23 @@ export class OpNode extends ASTNode {
     this.children.push(left);
     this.children.push(right);
   }
+
+  eval = () => {
+    const left = this.children[0];
+    const right = this.children[1];
+    switch (this.root.value) {
+      case "+":
+        return left.eval() + right.eval();
+      case "-":
+        return left.eval() - right.eval();
+      case "*":
+        return left.eval() * right.eval();
+      case "/":
+        return left.eval() / right.eval();
+      default:
+        throw new Error(`runtime error: the operation '${this.root.value}' is not supported`);
+    }
+  };
 
   toString = (prefix: string = "") => {
     const isLeaf = this.children.length === 0;
@@ -30,6 +48,20 @@ export class NumberNode extends ASTNode {
     child && this.children.push(child);
   }
 
+  eval = () => {
+    const r = Number(this.root.value);
+    if (isNaN(r)) {
+      throw new Error(`runtime error: '${this.root.value}' is not a number`);
+    }
+    const unit = this.children[0];
+    if (isNil(unit)) {
+      return r;
+    } else if (unit instanceof UnitNode) {
+      return r * unit.eval();
+    }
+    throw new Error(`runtime error: '${unit}' is not a unit`);
+  };
+
   toString = (prefix: string = "") => {
     const isLeaf = this.children.length === 0;
     const s = prefix + (isLeaf ? "└─ " : "├─ ") + this.root.value + "\n";
@@ -43,6 +75,30 @@ export class UnitNode extends ASTNode {
   constructor(private root: Token) {
     super();
   }
+
+  eval = () => {
+    switch (this.root.value.toLowerCase()) {
+      case "mm":
+        return 0.001;
+      case "cm":
+        return 0.01;
+      case "dm":
+        return 0.1;
+      case "m":
+        return 1;
+      case "r":
+        return 360;
+      case "inch":
+      case "in":
+        return 0.3048;
+      case "feet":
+      case "foot":
+      case "ft":
+        return 0.0254;
+      default:
+        throw new Error(`runtime error: the unit '${this.root.value}' is not supported`);
+    }
+  };
 
   toString = (prefix: string = "") => {
     const isLeaf = this.children.length === 0;

@@ -1,3 +1,4 @@
+import { calc } from "./calculator";
 import { Lexer } from "./lexer";
 import { Parser } from "./parser";
 import { TokenType } from "./token";
@@ -13,8 +14,8 @@ function main() {
   //     readline.close();
   //   });
 
-  const l = new Lexer("3 * (1m + 0.2mm)");
   // TEST: lexer
+  // const l = new Lexer("3 * (1m + 0.2mm)");
   // let token = l.getNextToken();
   // if (isNil(token)) {
   //   return;
@@ -28,8 +29,17 @@ function main() {
   // }
 
   // TEST: parser
-  const p = new Parser(l);
-  const root = p.parse();
-  console.log(root.toString());
+  // console.time("compiler");
+  // const l = new Lexer("3 * (1m + 0.2mm)");
+  // const p = new Parser(l);
+  // const root = p.parse();
+  // console.log(root.toString());
+  // console.timeEnd("compiler");
+
+  console.time("compiler");
+  const exp = "3 * (0.1m + 2mm)";
+  const res = calc(exp);
+  console.log("the result of '%s' is: %s", exp, res);
+  console.timeEnd("compiler");
 }
 main();
