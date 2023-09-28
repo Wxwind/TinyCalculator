@@ -12,12 +12,6 @@ export class Lexer {
     this.moveNext();
   }
 
-  skipWhitespace = () => {
-    while (this.nextChar === " " || this.nextChar === "\t" || this.nextChar === "\n" || this.nextChar === "\r") {
-      this.moveNext();
-    }
-  };
-
   getNextToken = () => {
     if (isNil(this.nextChar)) return new Token(TokenType.EOF, TokenType.EOF);
     this.skipWhitespace();
@@ -53,11 +47,11 @@ export class Lexer {
         return new Token(t, t);
       }
 
-      throw new Error(`lexer: unresolved token '${this.nextChar}'`);
+      throw new Error(`lexer: unresolved symbol '${this.nextChar}'`);
     }
   };
 
-  moveNext() {
+  private moveNext() {
     this.nextIndex++;
     if (this.nextIndex >= this.text.length) {
       this.nextChar = null;
@@ -65,4 +59,10 @@ export class Lexer {
     }
     this.nextChar = this.text[this.nextIndex];
   }
+
+  private skipWhitespace = () => {
+    while (this.nextChar === " " || this.nextChar === "\t" || this.nextChar === "\n" || this.nextChar === "\r") {
+      this.moveNext();
+    }
+  };
 }

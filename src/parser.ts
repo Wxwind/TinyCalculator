@@ -12,7 +12,7 @@ export class Parser {
     return this.expr();
   };
 
-  match = (type: TokenType) => {
+  private match = (type: TokenType) => {
     if (this.curToken.tokenType === type) {
       this.curToken = this.lexer.getNextToken();
     } else {
@@ -20,7 +20,7 @@ export class Parser {
     }
   };
 
-  expr: () => ASTNode = () => {
+  private expr: () => ASTNode = () => {
     let node = this.term();
     while (this.curToken.tokenType === TokenType.PLUS || this.curToken.tokenType === TokenType.MINUS) {
       const tmpToken = this.curToken;
@@ -30,7 +30,7 @@ export class Parser {
     return node;
   };
 
-  term: () => ASTNode = () => {
+  private term: () => ASTNode = () => {
     let node = this.factor();
     while (this.curToken.tokenType === TokenType.MUTIPLICATION || this.curToken.tokenType === TokenType.DIVISION) {
       const tmpToken = this.curToken;
@@ -40,7 +40,7 @@ export class Parser {
     return node;
   };
 
-  factor: () => ASTNode = () => {
+  private factor: () => ASTNode = () => {
     if (this.curToken.value === "(") {
       this.match(TokenType.LPARENTHESIS);
       const node = this.expr();
@@ -51,7 +51,7 @@ export class Parser {
     }
   };
 
-  liternal: () => ASTNode = () => {
+  private liternal: () => ASTNode = () => {
     const tmpToken = this.curToken;
     this.match(TokenType.NUMBER);
     if (this.curToken.tokenType === TokenType.UNIT) {

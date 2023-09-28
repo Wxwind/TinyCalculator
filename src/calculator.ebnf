@@ -3,7 +3,7 @@
 expr = term, {addop, term}
 term = factor, {multiop, factor}
 factor = "(", expr, ")" | literial;
-literial = number,[unit];
+literial = number, [unit];
 
 addop="+"|"-";
 multiop="*"|"/";
