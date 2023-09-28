@@ -9,7 +9,8 @@ export class ASTNode {
   eval = () => 0;
 }
 
-export class OpNode extends ASTNode {
+// binary operator
+export class BiOpNode extends ASTNode {
   constructor(private root: Token, left: ASTNode, right: ASTNode) {
     super();
     this.children.push(left);
@@ -29,7 +30,7 @@ export class OpNode extends ASTNode {
       case "/":
         return left.eval() / right.eval();
       default:
-        throw new Error(`runtime error: the operation '${this.root.value}' is not supported`);
+        throw new Error(`runtime error: the binary operation '${this.root.value}' is not supported`);
     }
   };
 
@@ -42,6 +43,33 @@ export class OpNode extends ASTNode {
   };
 }
 
+// unaruy ooerator
+export class UOpNode extends ASTNode {
+  constructor(private root: Token, value: ASTNode) {
+    super();
+    this.children.push(value);
+  }
+
+  eval = () => {
+    const root = this.children[0];
+    switch (this.root.value) {
+      case "+":
+        return root.eval();
+      case "-":
+        return -root.eval();
+      default:
+        throw new Error(`runtime error: the unary operation '${this.root.value}' is not supported`);
+    }
+  };
+
+  toString = (prefix: string = "") => {
+    const isLeaf = this.children.length === 0;
+    const s = prefix + (isLeaf ? "└─ " : "├─ ") + this.root.value + "\n";
+    const newPrefix = prefix + (isLeaf ? "   " : "│  ");
+    const childrenInfo = this.children.map(a => a.toString(newPrefix)).join("");
+    return s + childrenInfo;
+  };
+}
 export class NumberNode extends ASTNode {
   constructor(private root: Token, child: ASTNode | null) {
     super();

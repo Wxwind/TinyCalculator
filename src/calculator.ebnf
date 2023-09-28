@@ -2,13 +2,12 @@
 (* term = term, multiop, factor | factor; *)
 expr = term, {addop, term}
 term = factor, {multiop, factor}
-factor = "(", expr, ")" | literial;
+factor = "(", expr, ")" | literial | addop, factor;
 literial = number, [unit];
-
-addop="+"|"-";
-multiop="*"|"/";
-unit = "m"|"mm"|"cm"|"inch"|"in"|"foot"|"feet"| "ft";
 
 
 number = digit, {digit}, {".", digit, {digit}};
-digit  = "0"-"9";
+digit = "0"-"9";
+addop = "+"|"-";
+multiop = "*"|"/";
+unit = "m"|"mm"|"cm"|"inch"|"in"|"foot"|"feet"|"ft";

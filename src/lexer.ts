@@ -5,6 +5,7 @@ export class Lexer {
   nextIndex = -1;
   nextChar: string | null = "";
   tokenMap: { [key: string]: TokenType } = {};
+
   constructor(private text: string) {
     Object.values(TokenType).forEach(k => {
       this.tokenMap[k as string] = k;

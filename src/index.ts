@@ -20,16 +20,16 @@ function main() {
   //   }
   // }
 
-  // TEST: parser
+  // TEST: parser;
   // console.time("compiler");
-  // const l = new Lexer("3 * (1m + 0.2mm)");
+  // const l = new Lexer("3 + -2");
   // const p = new Parser(l);
   // const root = p.parse();
   // console.log(root.toString());
   // console.timeEnd("compiler");
 
   console.time("compiler");
-  const exp = "2+3";
+  const exp = "2 *-(--3)";
   const res = calc(exp);
   console.log("the result of '%s' is: %s", exp, res);
   console.timeEnd("compiler");
