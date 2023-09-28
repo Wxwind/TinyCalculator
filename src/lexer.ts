@@ -53,7 +53,7 @@ export class Lexer {
         return new Token(t, t);
       }
 
-      throw new Error(`lexer: unresolved token '${t}'`);
+      throw new Error(`lexer: unresolved token '${this.nextChar}'`);
     }
   };
 
