@@ -1,6 +1,6 @@
 import { Lexer } from "./lexer";
 import { Token, TokenType } from "./token";
-import { ASTNode, NumberNode, BiOpNode, UnitNode, UOpNode } from "./ast";
+import { ASTNode, NumberNode, BinOpNode, UnitNode, UnaryOpNode } from "./ast";
 
 export class Parser {
   private curToken: Token;
@@ -25,7 +25,7 @@ export class Parser {
     while (this.curToken.tokenType === TokenType.PLUS || this.curToken.tokenType === TokenType.MINUS) {
       const tmpToken = this.curToken;
       this.match(this.curToken.tokenType);
-      node = new BiOpNode(tmpToken, node, this.term());
+      node = new BinOpNode(tmpToken, node, this.term());
     }
     return node;
   };
@@ -35,7 +35,7 @@ export class Parser {
     while (this.curToken.tokenType === TokenType.MUTIPLICATION || this.curToken.tokenType === TokenType.DIVISION) {
       const tmpToken = this.curToken;
       this.match(this.curToken.tokenType);
-      node = new BiOpNode(tmpToken, node, this.term());
+      node = new BinOpNode(tmpToken, node, this.term());
     }
     return node;
   };
@@ -50,10 +50,10 @@ export class Parser {
       const tmpToken = this.curToken;
       if (this.curToken.value === "+") {
         this.match(TokenType.PLUS);
-        return new UOpNode(tmpToken, this.factor());
+        return new UnaryOpNode(tmpToken, this.factor());
       } else {
         this.match(TokenType.MINUS);
-        return new UOpNode(tmpToken, this.factor());
+        return new UnaryOpNode(tmpToken, this.factor());
       }
     } else {
       return this.liternal();
