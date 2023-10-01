@@ -14,12 +14,12 @@ export class Interpreter {
     } else if (ast instanceof NumberNode) {
       return this.visit_NumberNode(ast);
     }
-    return 0;
+    throw new Error(`runtime error: the ASTNode '${typeof ast}' is not supported`);
   };
 
   private visit_BinOp = (node: BinOpNode) => {
-    const left = node.children[0];
-    const right = node.children[1];
+    const left = node.left;
+    const right = node.right;
     switch (node.root.value) {
       case "+":
         return this.visit(left) + this.visit(right);
@@ -34,8 +34,8 @@ export class Interpreter {
     }
   };
 
-  private visit_UnaryOp = (node: BinOpNode) => {
-    const root = node.children[0];
+  private visit_UnaryOp = (node: UnaryOpNode) => {
+    const root = node.child;
     switch (node.root.value) {
       case "+":
         return this.visit(root);
@@ -46,12 +46,12 @@ export class Interpreter {
     }
   };
 
-  private visit_NumberNode = (node: BinOpNode) => {
+  private visit_NumberNode = (node: NumberNode) => {
     const r = Number(node.root.value);
     if (isNaN(r)) {
       throw new Error(`runtime error: '${node.root.value}' is not a number`);
     }
-    const unit = node.children[0];
+    const unit = node.child;
     if (isNil(unit)) {
       return r;
     } else if (unit instanceof UnitNode) {
@@ -60,7 +60,7 @@ export class Interpreter {
     throw new Error(`runtime error: '${unit}' is not a unit`);
   };
 
-  private visit_Unit = (node: BinOpNode) => {
+  private visit_Unit = (node: UnitNode) => {
     switch (node.root.value.toLowerCase()) {
       case "mm":
         return 0.001;
