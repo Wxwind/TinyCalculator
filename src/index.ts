@@ -3,7 +3,8 @@ import { Lexer } from "./lexer";
 import { Parser } from "./parser";
 import { TokenType } from "./token";
 import { isNil } from "./utils";
-import { createInterface } from "readline";
+
+export { calc };
 
 function main() {
   // TEST: lexer
@@ -13,7 +14,7 @@ function main() {
   //   return;
   // }
   // while (token.tokenType !== TokenType.EOF) {
-  //   console.log(token.toString());
+  //   console.log(JSON.stringify(token));
   //   token = l.getNextToken();
   //   if (isNil(token)) {
   //     return;
@@ -21,18 +22,18 @@ function main() {
   // }
 
   // TEST: parser;
-  console.time("compiler");
-  const l = new Lexer("2 *-(--3+4ft*(2mm+6))");
-
-  const p = new Parser(l);
-  const root = p.parse();
-  console.timeEnd("compiler");
-  printAST(root);
-
   // console.time("compiler");
-  // const exp = "2 *-(--3)";
-  // const res = calc(exp);
-  // console.log("the result of '%s' is: %s", exp, res);
+  // const l = new Lexer("2 *-(--3+4ft*(2mm+6))");
+
+  // const p = new Parser(l);
+  // const root = p.parse();
   // console.timeEnd("compiler");
+  // printAST(root);
+
+  console.time("compiler");
+  const exp = "3 * ( 1 + 2 )";
+  const res = calc(exp);
+  console.log("the result of '%s' is: %s", exp, res);
+  console.timeEnd("compiler");
 }
 main();
