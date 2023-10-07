@@ -18,20 +18,19 @@ export class Lexer {
     if (isNil(this.nextChar)) return new Token(TokenType.EOF, TokenType.EOF);
     // char is number
     if (isNumberChar(this.nextChar)) {
-      let res = "";
+      const start = this.nextIndex;
       // get full number
       while (isNumberChar(this.nextChar)) {
-        res += this.nextChar;
         this.moveNext();
         if (this.nextChar === ".") {
-          res += this.nextChar;
           this.moveNext();
           while (isNumberChar(this.nextChar)) {
-            res += this.nextChar;
             this.moveNext();
           }
         }
       }
+      const end = this.nextIndex;
+      const res = this.text.substring(start, end);
       return new Token(TokenType.NUMBER, res);
     } else if (isLetterChar(this.nextChar)) {
       let res = "";
