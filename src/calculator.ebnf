@@ -6,7 +6,8 @@ factor = "(", expr, ")" | literial | addop, factor;
 literial = number, [unit];
 
 
-number = digit, {digit}, {".", digit, {digit}};
+number = digit, {digit}, [".", {digit}], [exp];
+exp = ("e"|"E"), digit, {digit}
 digit = "0"-"9";
 addop = "+"|"-";
 multiop = "*"|"/";

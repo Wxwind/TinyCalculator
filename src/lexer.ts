@@ -28,6 +28,17 @@ export class Lexer {
             this.moveNext();
           }
         }
+        if (this.nextChar === "e" || this.nextChar === "E") {
+          this.moveNext();
+          if (!(isNumberChar(this.nextChar) || (this.nextChar as string) === "-")) {
+            throw new Error(`lexer: missing exponent after 'e', find ${this.nextChar}`);
+          }
+          this.moveNext();
+
+          while (isNumberChar(this.nextChar)) {
+            this.moveNext();
+          }
+        }
       }
       const end = this.nextIndex;
       const res = this.text.substring(start, end);
