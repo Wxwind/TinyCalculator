@@ -1,7 +1,7 @@
 {
-  "name": "tstest",
+  "name": "tiny-calculator",
   "version": "1.0.0",
-  "description": "",
+  "description": "a tiny calculator compiler which support unit and scientific notation.",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node ./src/index.ts",

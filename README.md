@@ -1,5 +1,5 @@
 # Tiny Calculator
-a tiny calculator compiler which support unit.
+a tiny calculator compiler which support unit and scientific notation.
 
 ## Run the example
 install the package
