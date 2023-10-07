@@ -7,7 +7,7 @@ literial = number, [unit];
 
 
 number = digit, {digit}, [".", {digit}], [exp];
-exp = ("e"|"E"), digit, {digit}
+exp = ("e"|"E"), ["+"|"-"], digit, {digit}
 digit = "0"-"9";
 addop = "+"|"-";
 multiop = "*"|"/";

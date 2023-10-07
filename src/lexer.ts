@@ -30,8 +30,16 @@ export class Lexer {
         }
         if (this.nextChar === "e" || this.nextChar === "E") {
           this.moveNext();
-          if (!(isNumberChar(this.nextChar) || (this.nextChar as string) === "-")) {
+          if (
+            !(isNumberChar(this.nextChar) || (this.nextChar as string) === "-" || (this.nextChar as string) === "+")
+          ) {
             throw new Error(`lexer: missing exponent after 'e', find ${this.nextChar}`);
+          }
+          if ((this.nextChar as string) === "-" || (this.nextChar as string) === "+") {
+            this.moveNext();
+            if (!isNumberChar(this.nextChar)) {
+              throw new Error(`lexer: missing number after exponent 'e', find ${this.nextChar}`);
+            }
           }
           this.moveNext();
 
