@@ -14,8 +14,8 @@ export class Lexer {
   }
 
   getNextToken = () => {
-    if (isNil(this.nextChar)) return new Token(TokenType.EOF, TokenType.EOF);
     this.skipWhitespace();
+    if (isNil(this.nextChar)) return new Token(TokenType.EOF, TokenType.EOF);
     // char is number
     if (isNumberChar(this.nextChar)) {
       let res = "";
